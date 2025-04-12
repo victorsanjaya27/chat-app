@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id" class="transition-colors duration-300">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App - Belajar</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+    <!-- Tailwind Dark Mode Config -->
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-tap-highlight-color: transparent;
+        text-size-adjust: 100%;
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-gray-100 dark:bg-gray-900 text-black dark:text-white min-h-screen flex items-center justify-center px-2 sm:px-4"
+  >
+    <div
+      class="w-full max-w-2xl h-[90vh] md:h-[600px] bg-white dark:bg-gray-800 shadow-xl rounded-2xl flex flex-col overflow-hidden"
+    >
+      <!-- Header -->
+      <div
+        class="bg-green-500 text-white px-4 sm:px-6 py-4 font-semibold flex justify-between items-center"
+      >
+        <span class="text-lg">Chat Room</span>
+        <div class="flex items-center gap-2">
+          <label for="darkModeToggle" class="text-sm cursor-pointer">🌙</label>
+          <input type="checkbox" id="darkModeToggle" class="toggle-checkbox" />
+        </div>
+      </div>
+
+      <!-- Room Selector -->
+      <div class="px-4 sm:px-6 py-3 border-b bg-white dark:bg-gray-700">
+        <label for="roomSelect" class="mr-3 font-medium">Pilih Room:</label>
+        <select
+          id="roomSelect"
+          class="border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded-md text-sm dark:bg-gray-800 dark:text-white focus:outline-none"
+        >
+          <option value="umum">Umum</option>
+          <option value="belajar">Belajar</option>
+          <option value="ngobrol">Ngobrol</option>
+        </select>
+      </div>
+
+      <!-- Chat Box -->
+      <div
+        id="chatBox"
+        class="flex-1 min-h-0 px-4 sm:px-6 py-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-gray-800"
+      >
+        <!-- Pesan akan muncul di sini -->
+      </div>
+
+      <!-- Input Pesan -->
+      <div
+        class="px-4 sm:px-6 py-4 border-t bg-white dark:bg-gray-700 flex items-center gap-3"
+      >
+        <input
+          id="msgInput"
+          type="text"
+          placeholder="Ketik pesan..."
+          class="flex-1 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-2 text-sm dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+        <input type="file" id="imageInput" accept="image/*" class="hidden" />
+        <button
+          id="imageBtn"
+          class="text-xl bg-gray-200 dark:bg-gray-600 px-4 py-2 md:px-3 md:py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-500 transition"
+        >
+          📷
+        </button>
+
+        <button
+          id="sendBtn"
+          class="bg-green-500 text-white px-6 py-2 text-sm md:text-base rounded-full font-medium hover:bg-green-600 transition"
+        >
+          Kirim
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal input nama -->
+    <div
+      id="nameModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div
+        class="bg-white dark:bg-gray-800 px-6 py-6 rounded-xl shadow-lg w-80 text-center"
+      >
+        <h2 class="text-lg font-bold mb-4">Masukkan Nama Kamu</h2>
+        <input
+          id="nameInput"
+          type="text"
+          placeholder="Nama"
+          class="border border-gray-300 dark:border-gray-600 rounded-md w-full px-3 py-2 mb-4 text-sm dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+        <button
+          id="saveNameBtn"
+          class="bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600 transition font-medium text-sm"
+        >
+          Lanjut
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Gambar -->
+    <div
+      id="imageModal"
+      class="fixed inset-0 p-4 bg-black bg-opacity-80 flex items-center justify-center hidden opacity-0 z-50 transition-opacity duration-300"
+    >
+      <!-- Tombol kiri -->
+      <button
+        id="prevImage"
+        class="absolute left-4 text-white text-4xl font-bold bg-black bg-opacity-30 hover:bg-opacity-50 rounded-full px-3 py-1"
+      >
+        ←
+      </button>
+
+      <!-- Gambar -->
+      <img
+        id="modalImage"
+        src=""
+        class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-lg scale-100 transition-transform duration-300"
+      />
+
+      <!-- Tombol kanan -->
+      <button
+        id="nextImage"
+        class="absolute right-4 text-white text-4xl font-bold bg-black bg-opacity-30 hover:bg-opacity-50 rounded-full px-3 py-1"
+      >
+        →
+      </button>
+    </div>
+
+    <!-- App -->
+    <script src="app.js"></script>
+  </body>
+</html>
